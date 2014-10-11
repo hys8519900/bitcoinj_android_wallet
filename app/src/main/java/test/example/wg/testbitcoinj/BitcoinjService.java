@@ -24,6 +24,14 @@ public class BitcoinjService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("service", "onStartCommand()" + startId + ": " + intent);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+
         return super.onStartCommand(intent, flags, startId);
     }
 
