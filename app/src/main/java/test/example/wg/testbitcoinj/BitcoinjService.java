@@ -41,7 +41,7 @@ public class BitcoinjService extends Service {
                 WalletAppKit kit = new WalletAppKit(params, new File("/mnt/sdcard-ext/"), "walletappkit-example");
                 kit.startAsync();
                 kit.awaitRunning();
-                Log.v("Sdcard ",Environment.getExternalStorageDirectory().toString());
+                //Log.v("Sdcard ",Environment.getExternalStorageDirectory().toString());
                 /*
                 File file = new File("mnt/sdcard-ext/testwritefile");
                 if(!file.exists())
