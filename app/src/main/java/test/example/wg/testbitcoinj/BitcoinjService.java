@@ -12,6 +12,7 @@ import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.TestNet3Params;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 public class BitcoinjService extends Service {
@@ -36,19 +37,22 @@ public class BitcoinjService extends Service {
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                //NetworkParameters params = TestNet3Params.get();
-                //WalletAppKit kit = new WalletAppKit(params, new File(Environment.getExternalStorageDirectory().toString()), "walletappkit-example");
-                //kit.startAsync();
-                //kit.awaitRunning();
+                NetworkParameters params = TestNet3Params.get();
+                WalletAppKit kit = new WalletAppKit(params, new File("/mnt/sdcard-ext/"), "walletappkit-example");
+                kit.startAsync();
+                kit.awaitRunning();
                 Log.v("Sdcard ",Environment.getExternalStorageDirectory().toString());
-                while(true) {
-                    Log.v("service ", "loop");
+                /*
+                File file = new File("mnt/sdcard-ext/testwritefile");
+                if(!file.exists())
+                {
                     try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
+                        file.createNewFile();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                */
 
             }
         });
