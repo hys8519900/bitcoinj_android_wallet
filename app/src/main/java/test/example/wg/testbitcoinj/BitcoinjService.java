@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
-import com.google.bitcoin.core.*;
-import com.google.bitcoin.kits.WalletAppKit;
-import com.google.bitcoin.params.TestNet3Params;
+
+import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.core.Utils;
+import org.bitcoinj.kits.WalletAppKit;
+import org.bitcoinj.params.TestNet3Params;
 
 import java.io.File;
 import java.util.Date;
 
 public class BitcoinjService extends Service {
+    private static Thread thread;
 
     @Override
     public  void onCreate() {
@@ -30,16 +33,26 @@ public class BitcoinjService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.v("service", "onStartCommand() id:" + startId + ": " + intent);
 
-        new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 //NetworkParameters params = TestNet3Params.get();
                 //WalletAppKit kit = new WalletAppKit(params, new File(Environment.getExternalStorageDirectory().toString()), "walletappkit-example");
-                //kit.startAndWait();
+                //kit.startAsync();
+                //kit.awaitRunning();
                 Log.v("Sdcard ",Environment.getExternalStorageDirectory().toString());
+                while(true) {
+                    Log.v("service ", "loop");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
             }
-        }).start();
+        });
+        thread.start();
 
         return super.onStartCommand(intent, flags, startId);
     }
