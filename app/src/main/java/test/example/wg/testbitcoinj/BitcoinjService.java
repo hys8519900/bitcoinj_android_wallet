@@ -7,8 +7,13 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+
+import org.bitcoinj.core.AbstractWalletEventListener;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Block;
+import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.DownloadListener;
 import org.bitcoinj.core.GetDataMessage;
 import org.bitcoinj.core.Message;
@@ -27,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import javax.annotation.Nullable;
 
@@ -83,7 +89,28 @@ public class BitcoinjService extends Service {
                 kit.awaitRunning();
 
 
-                //kit.peerGroup().addEventListener();
+                kit.wallet().addEventListener(new AbstractWalletEventListener() {
+                    @Override
+                    public void onCoinsReceived(Wallet wallet, Transaction tx, Coin prevBalance, Coin newBalance) {
+                        super.onCoinsReceived(wallet, tx, prevBalance, newBalance);
+
+                        Coin value = tx.getValueSentToMe(wallet);
+                        Log.i("AbstractWalletEventListener: ","Received tx for " + value.toFriendlyString() + ": " + tx);
+                        Log.i("AbstractWalletEventListener: ","Transaction will be forwarded after it confirms.");
+
+                        Futures.addCallback(tx.getConfidence().getDepthFuture(1), new FutureCallback<Transaction>() {
+                            @Override
+                            public void onSuccess(@Nullable Transaction result) {
+                                Log.i("Futures Confidence depth onSuccess: ", "depth 1" + result.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                throw new RuntimeException(t);
+                            }
+                        });
+                    }
+                });
 
                 //show receive address
                 Address sendToAddress = kit.wallet().currentReceiveAddress();
