@@ -18,6 +18,8 @@ import org.bitcoinj.core.Utils;
 import org.bitcoinj.core.Wallet;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.TestNet3Params;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +31,8 @@ import javax.annotation.Nullable;
 public class BitcoinjService extends Service {
     private static Thread thread;
     private static WalletAppKit kit;
+
+    private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
     @Override
     public  void onCreate() {
@@ -55,7 +59,10 @@ public class BitcoinjService extends Service {
                 kit.startAsync();
                 kit.awaitRunning();
 
-                Log.e("kit add EventListener","kit add EventListener");
+                Log.e("kit add EventListener", "kit add EventListener");
+                Log.v("kit add EventListener","kit add EventListener");
+                log.info("kit add EventListener");
+
                 kit.peerGroup().addEventListener(new PeerEventListener() {
                     @Override
                     public void onBlocksDownloaded(Peer peer, Block block, int blocksLeft) {
@@ -96,8 +103,8 @@ public class BitcoinjService extends Service {
                 });
 
                 Address sendToAddress = kit.wallet().currentReceiveAddress();
-                Log.e(" Send coins to: " + sendToAddress, " ");
-                Log.e(" Waiting for coins to arrive. Press Ctrl-C to quit.", " ");
+                Log.i("Wallet: ", " Send coins to: " + sendToAddress);
+                Log.i("Wallet: ", " Waiting for coins to arrive. Press Ctrl-C to quit.");
 
                 try{
                     Thread.sleep(Long.MAX_VALUE);
