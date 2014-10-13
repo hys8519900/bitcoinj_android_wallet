@@ -8,6 +8,7 @@ import android.util.Log;
 
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Utils;
+import org.bitcoinj.core.Wallet;
 import org.bitcoinj.kits.WalletAppKit;
 import org.bitcoinj.params.TestNet3Params;
 
@@ -17,6 +18,7 @@ import java.util.Date;
 
 public class BitcoinjService extends Service {
     private static Thread thread;
+    private static WalletAppKit kit;
 
     @Override
     public  void onCreate() {
@@ -28,6 +30,7 @@ public class BitcoinjService extends Service {
     @Override
     public void onDestroy() {
         Log.v("service", "onDestroy()");
+        kit.setAutoStop(true);
     }
 
     @Override
@@ -38,9 +41,12 @@ public class BitcoinjService extends Service {
             @Override
             public void run() {
                 NetworkParameters params = TestNet3Params.get();
-                WalletAppKit kit = new WalletAppKit(params, new File("/mnt/sdcard-ext/"), "walletappkit-example");
+                kit = new WalletAppKit(params, new File("/mnt/sdcard-ext/"), "walletappkit-example");
                 kit.startAsync();
                 kit.awaitRunning();
+
+
+
                 //Log.v("Sdcard ",Environment.getExternalStorageDirectory().toString());
                 /*
                 File file = new File("mnt/sdcard-ext/testwritefile");
