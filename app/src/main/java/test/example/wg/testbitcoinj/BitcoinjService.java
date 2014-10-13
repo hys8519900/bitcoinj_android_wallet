@@ -118,8 +118,6 @@ public class BitcoinjService extends Service {
                 //show wallet
                 log.info(kit.wallet().toString());
                 //Log.i("Wallet: ", " Waiting for coins to arrive. Press Ctrl-C to quit.");
-                //pass the address to MainActivity
-                MainActivity.setAddressTextView(sendToAddress.toString());
 
 
                 try{
@@ -153,5 +151,14 @@ public class BitcoinjService extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public static String getCurrentRecvAddress() {
+        if(kit!=null && kit.isRunning())
+        {
+            return kit.wallet().currentReceiveAddress().toString();
+        }
+
+        return null;
     }
 }

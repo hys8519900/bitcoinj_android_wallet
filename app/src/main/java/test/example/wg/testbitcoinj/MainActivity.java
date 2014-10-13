@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 
 public class MainActivity extends Activity {
     //private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
-    private static String servicestr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +60,8 @@ public class MainActivity extends Activity {
         changeAddressTextView();
     }
 
-    public static void setAddressTextView(String string) {
-        servicestr = string;
-    }
-
     public void changeAddressTextView() {
         TextView textView = (TextView)findViewById(R.id.text_address);
-        textView.setText(servicestr);
+        textView.setText(BitcoinjService.getCurrentRecvAddress());
     }
 }
