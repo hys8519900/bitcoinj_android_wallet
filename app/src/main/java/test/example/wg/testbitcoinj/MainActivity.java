@@ -8,13 +8,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 
 public class MainActivity extends Activity {
+    private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //test slf4j
+        log.info("hello world");
+
     }
 
 
