@@ -115,7 +115,9 @@ public class BitcoinjService extends Service {
                 //show receive address
                 Address sendToAddress = kit.wallet().currentReceiveAddress();
                 Log.i("Wallet: ", " Send coins to: " + sendToAddress);
-                Log.i("Wallet: ", " Waiting for coins to arrive. Press Ctrl-C to quit.");
+                //show wallet
+                log.info(kit.wallet().toString());
+                //Log.i("Wallet: ", " Waiting for coins to arrive. Press Ctrl-C to quit.");
                 //pass the address to MainActivity
                 MainActivity.setAddressTextView(sendToAddress.toString());
 
