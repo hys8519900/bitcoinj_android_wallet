@@ -6,7 +6,13 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.bitcoinj.core.Block;
+import org.bitcoinj.core.GetDataMessage;
+import org.bitcoinj.core.Message;
 import org.bitcoinj.core.NetworkParameters;
+import org.bitcoinj.core.Peer;
+import org.bitcoinj.core.PeerEventListener;
+import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.core.Wallet;
 import org.bitcoinj.kits.WalletAppKit;
@@ -15,6 +21,9 @@ import org.bitcoinj.params.TestNet3Params;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class BitcoinjService extends Service {
     private static Thread thread;
@@ -45,7 +54,51 @@ public class BitcoinjService extends Service {
                 kit.startAsync();
                 kit.awaitRunning();
 
+                kit.peerGroup().addEventListener(new PeerEventListener() {
+                    @Override
+                    public void onBlocksDownloaded(Peer peer, Block block, int blocksLeft) {
+                        Log.d("peerGroup", "onBlocksDownloaded()");
+                    }
 
+                    @Override
+                    public void onChainDownloadStarted(Peer peer, int blocksLeft) {
+                        Log.d("peerGroup", "onChainDownloadStarted()");
+                    }
+
+                    @Override
+                    public void onPeerConnected(Peer peer, int peerCount) {
+                        Log.d("peerGroup", "onPeerConnected()");
+                    }
+
+                    @Override
+                    public void onPeerDisconnected(Peer peer, int peerCount) {
+                        Log.d("peerGroup", "onPeerDisconnected()");
+                    }
+
+                    @Override
+                    public Message onPreMessageReceived(Peer peer, Message m) {
+                        Log.d("peerGroup", "onPreMessageReceived()");
+                        return null;
+                    }
+
+                    @Override
+                    public void onTransaction(Peer peer, Transaction t) {
+                        Log.d("peerGroup", "onTransaction()");
+                    }
+
+                    @Nullable
+                    @Override
+                    public List<Message> getData(Peer peer, GetDataMessage m) {
+                        return null;
+                    }
+                });
+
+                try{
+                    Thread.sleep(Long.MAX_VALUE);
+                } catch (InterruptedException ingored)
+                {
+
+                }
 
                 //Log.v("Sdcard ",Environment.getExternalStorageDirectory().toString());
                 /*
