@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Block;
 import org.bitcoinj.core.GetDataMessage;
 import org.bitcoinj.core.Message;
@@ -54,6 +55,7 @@ public class BitcoinjService extends Service {
                 kit.startAsync();
                 kit.awaitRunning();
 
+                Log.e("kit add EventListener","kit add EventListener");
                 kit.peerGroup().addEventListener(new PeerEventListener() {
                     @Override
                     public void onBlocksDownloaded(Peer peer, Block block, int blocksLeft) {
@@ -92,6 +94,10 @@ public class BitcoinjService extends Service {
                         return null;
                     }
                 });
+
+                Address sendToAddress = kit.wallet().currentReceiveAddress();
+                Log.e(" Send coins to: " + sendToAddress, " ");
+                Log.e(" Waiting for coins to arrive. Press Ctrl-C to quit.", " ");
 
                 try{
                     Thread.sleep(Long.MAX_VALUE);
