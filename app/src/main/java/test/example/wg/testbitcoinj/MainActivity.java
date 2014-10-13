@@ -7,13 +7,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 
 public class MainActivity extends Activity {
-    private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
+    //private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
+    private static String servicestr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         //test slf4j
-        log.info("hello world");
+        //log.info("hello world");
 
     }
 
@@ -53,5 +55,18 @@ public class MainActivity extends Activity {
     public void stop_service(View view) {
         Intent stopIntent = new Intent(this, BitcoinjService.class);
         stopService(stopIntent);
+    }
+
+    public void testbutton(View view) {
+        changeAddressTextView();
+    }
+
+    public static void setAddressTextView(String string) {
+        servicestr = string;
+    }
+
+    public void changeAddressTextView() {
+        TextView textView = (TextView)findViewById(R.id.text_address);
+        textView.setText(servicestr);
     }
 }

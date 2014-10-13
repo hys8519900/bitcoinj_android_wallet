@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Block;
@@ -71,7 +72,7 @@ public class BitcoinjService extends Service {
                             @Override
                             protected void progress(double pct, int blockSoFar, Date date)
                             {
-                                Log.v("Download: ", pct + "%  " + date.toString());
+                                Log.v("onSetupCompleted progress called: ", pct + "%  " + date.toString());
 
                             }
                         });
@@ -84,9 +85,13 @@ public class BitcoinjService extends Service {
 
                 //kit.peerGroup().addEventListener();
 
+                //show receive address
                 Address sendToAddress = kit.wallet().currentReceiveAddress();
                 Log.i("Wallet: ", " Send coins to: " + sendToAddress);
                 Log.i("Wallet: ", " Waiting for coins to arrive. Press Ctrl-C to quit.");
+                //pass the address to MainActivity
+                MainActivity.setAddressTextView(sendToAddress.toString());
+
 
                 try{
                     Thread.sleep(Long.MAX_VALUE);

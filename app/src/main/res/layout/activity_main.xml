@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,9 +17,26 @@
     
     <Button
         android:id="@+id/stop_service"
+
+        android:layout_toRightOf="@id/start_service"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stop Service"
         android:onClick="stop_service"/>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/button_fortest"
+        android:layout_below="@id/start_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="testButton"
+        android:onClick="testbutton"/>
+
+    <TextView
+        android:id="@+id/text_address"
+        android:layout_below="@id/button_fortest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
