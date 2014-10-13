@@ -67,6 +67,13 @@ public class BitcoinjService extends Service {
                             {
                                 Log.v("DownloadListener", "startDownload");
                             }
+
+                            @Override
+                            protected void progress(double pct, int blockSoFar, Date date)
+                            {
+                                Log.v("Download: ", pct + "%  " + date.toString());
+
+                            }
                         });
                     }
                 };
@@ -74,9 +81,6 @@ public class BitcoinjService extends Service {
                 kit.startAsync();
                 kit.awaitRunning();
 
-                Log.e("kit add EventListener", "kit add EventListener");
-                Log.v("kit add EventListener","kit add EventListener");
-                log.info("kit add EventListener");
 
                 //kit.peerGroup().addEventListener();
 
