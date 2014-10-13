@@ -8,6 +8,7 @@ import android.util.Log;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Block;
+import org.bitcoinj.core.DownloadListener;
 import org.bitcoinj.core.GetDataMessage;
 import org.bitcoinj.core.Message;
 import org.bitcoinj.core.NetworkParameters;
@@ -63,42 +64,11 @@ public class BitcoinjService extends Service {
                 Log.v("kit add EventListener","kit add EventListener");
                 log.info("kit add EventListener");
 
-                kit.peerGroup().addEventListener(new PeerEventListener() {
+                kit.peerGroup().addEventListener(new DownloadListener(){
                     @Override
-                    public void onBlocksDownloaded(Peer peer, Block block, int blocksLeft) {
-                        Log.d("peerGroup", "onBlocksDownloaded()");
-                    }
-
-                    @Override
-                    public void onChainDownloadStarted(Peer peer, int blocksLeft) {
-                        Log.d("peerGroup", "onChainDownloadStarted()");
-                    }
-
-                    @Override
-                    public void onPeerConnected(Peer peer, int peerCount) {
-                        Log.d("peerGroup", "onPeerConnected()");
-                    }
-
-                    @Override
-                    public void onPeerDisconnected(Peer peer, int peerCount) {
-                        Log.d("peerGroup", "onPeerDisconnected()");
-                    }
-
-                    @Override
-                    public Message onPreMessageReceived(Peer peer, Message m) {
-                        Log.d("peerGroup", "onPreMessageReceived()");
-                        return null;
-                    }
-
-                    @Override
-                    public void onTransaction(Peer peer, Transaction t) {
-                        Log.d("peerGroup", "onTransaction()");
-                    }
-
-                    @Nullable
-                    @Override
-                    public List<Message> getData(Peer peer, GetDataMessage m) {
-                        return null;
+                    protected void startDownload(int blocks)
+                    {
+                        Log.v("DownloadListener", "startDownload");
                     }
                 });
 
