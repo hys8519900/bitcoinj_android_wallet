@@ -56,7 +56,21 @@ public class BitcoinjService extends Service {
             @Override
             public void run() {
                 NetworkParameters params = TestNet3Params.get();
-                kit = new WalletAppKit(params, new File("/mnt/sdcard-ext/"), "walletappkit-example");
+                kit = new WalletAppKit(params, new File("/mnt/sdcard-ext/"), "walletappkit-example")
+                {
+                    @Override
+                    protected void onSetupCompleted()
+                    {
+                        kit.setDownloadListener(new DownloadListener(){
+                            @Override
+                            protected void startDownload(int blocks)
+                            {
+                                Log.v("DownloadListener", "startDownload");
+                            }
+                        });
+                    }
+                };
+
                 kit.startAsync();
                 kit.awaitRunning();
 
@@ -64,13 +78,7 @@ public class BitcoinjService extends Service {
                 Log.v("kit add EventListener","kit add EventListener");
                 log.info("kit add EventListener");
 
-                kit.peerGroup().addEventListener(new DownloadListener(){
-                    @Override
-                    protected void startDownload(int blocks)
-                    {
-                        Log.v("DownloadListener", "startDownload");
-                    }
-                });
+                //kit.peerGroup().addEventListener();
 
                 Address sendToAddress = kit.wallet().currentReceiveAddress();
                 Log.i("Wallet: ", " Send coins to: " + sendToAddress);
