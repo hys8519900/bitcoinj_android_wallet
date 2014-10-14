@@ -110,21 +110,6 @@ public class BitcoinjService extends Service {
                     }
                 };
 
-                //test for callback listener
-                for(int i=0; i<100; i++) {
-                    log.info("thread for: "+ i);
-
-                    if(onProgressListener != null)
-                    {
-                        onProgressListener.onProgress(i);
-                    }
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
 
                 kit.startAsync();
                 kit.awaitRunning();
