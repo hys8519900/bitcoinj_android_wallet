@@ -2,6 +2,7 @@ package test.example.wg.testbitcoinj;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Future;
 
 import javax.annotation.Nullable;
@@ -41,6 +43,19 @@ public class BitcoinjService extends Service {
     private static WalletAppKit kit;
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
+
+    //Service Binder
+    private final IBinder mBinder = new LocalBinder();
+
+    //new Binder have method getSerivce()
+    public class LocalBinder extends Binder {
+        BitcoinjService getService() {
+            return BitcoinjService.this;
+        }
+    }
+
+    //Random for test Binder Service
+    private final Random mGenerator = new Random();
 
     @Override
     public  void onCreate() {
@@ -152,9 +167,16 @@ public class BitcoinjService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
+        return mBinder;
     }
 
+    //method for test Bind Service
+    public int getRandomNumber() {
+        return mGenerator.nextInt(100);
+    }
+
+    //static UI get Address
     public static String getCurrentRecvAddress() {
         if(kit!=null && kit.isRunning())
         {
