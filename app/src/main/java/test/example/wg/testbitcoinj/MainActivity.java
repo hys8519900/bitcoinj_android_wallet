@@ -49,6 +49,9 @@ public class MainActivity extends Activity {
     public void start_service(View view) {
         Intent startIntent = new Intent(this, BitcoinjService.class);
         startService(startIntent);
+
+        //show address at first
+        changeAddressTextView();
     }
 
     public void stop_service(View view) {
