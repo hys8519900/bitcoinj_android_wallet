@@ -112,9 +112,11 @@ public class BitcoinjService extends Service {
 
                 //test for callback listener
                 for(int i=0; i<100; i++) {
+                    log.info("thread for: "+ i);
+
                     if(onProgressListener != null)
                     {
-                        onProgressListener.onProgres(i);
+                        onProgressListener.onProgress(i);
                     }
 
                     try {

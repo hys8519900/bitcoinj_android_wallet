@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 
             bitcoinjService.setOnProgressListener(new OnProgressListener() {
                 @Override
-                public void onProgres(int progress) {
+                public void onProgress(int progress) {
                     mProgressBar.setProgress(progress);
                 }
             });
@@ -98,6 +98,7 @@ public class MainActivity extends Activity {
         //test service binded
         TextView textView = (TextView)findViewById(R.id.text_address);
         textView.setText("" + bitcoinjService.getRandomNumber());
+
 
         //changeAddressTextView();
     }
