@@ -68,11 +68,13 @@ public class BitcoinjService extends Service {
                     @Override
                     protected void onSetupCompleted()
                     {
+                        //set false to use kit before network and block sync
+                        kit.setBlockingStartup(false);
                         kit.setDownloadListener(new DownloadListener(){
                             @Override
                             protected void startDownload(int blocks)
                             {
-                                Log.v("DownloadListener", "startDownload");
+                                Log.v("MyDownloadListener", "startDownload");
                             }
 
                             @Override
