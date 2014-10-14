@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,9 @@ import org.slf4j.Logger;
 
 public class MainActivity extends Activity {
     //private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
+
+    //get ProgressBar UI
+    private ProgressBar mProgressBar;
 
     //Service for Binder
     BitcoinjService bitcoinjService;
@@ -29,6 +33,16 @@ public class MainActivity extends Activity {
             BitcoinjService.LocalBinder binder = (BitcoinjService.LocalBinder)iBinder;
             bitcoinjService = binder.getService();
             mBound = true;
+
+            //set onProgressListener
+            mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
+
+            bitcoinjService.setOnProgressListener(new OnProgressListener() {
+                @Override
+                public void onProgres(int progress) {
+                    mProgressBar.setProgress(progress);
+                }
+            });
         }
 
         @Override
@@ -46,6 +60,8 @@ public class MainActivity extends Activity {
         //bind Service
         Intent intent = new Intent(this, BitcoinjService.class);
         bindService(intent, mConnection, BIND_AUTO_CREATE);
+
+
     }
 
 

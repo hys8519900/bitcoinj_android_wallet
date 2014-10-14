@@ -54,8 +54,16 @@ public class BitcoinjService extends Service {
         }
     }
 
+    // UI ProgressBar Listener
+    private OnProgressListener onProgressListener;
+
     //Random for test Binder Service
     private final Random mGenerator = new Random();
+
+    //method for UI set onProgressListener
+    public void setOnProgressListener(OnProgressListener onProgressListener) {
+        this.onProgressListener = onProgressListener;
+    }
 
     @Override
     public  void onCreate() {
@@ -101,6 +109,20 @@ public class BitcoinjService extends Service {
                         });
                     }
                 };
+
+                //test for callback listener
+                for(int i=0; i<100; i++) {
+                    if(onProgressListener != null)
+                    {
+                        onProgressListener.onProgres(i);
+                    }
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 kit.startAsync();
                 kit.awaitRunning();
