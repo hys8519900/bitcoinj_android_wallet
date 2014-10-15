@@ -20,9 +20,6 @@ import org.slf4j.Logger;
 public class MainActivity extends Activity {
     //private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
-    //get ProgressBar UI
-    private ProgressBar mProgressBar;
-
     //Service for Binder
     BitcoinjService bitcoinjService;
     boolean mBound = false;
@@ -34,15 +31,6 @@ public class MainActivity extends Activity {
             bitcoinjService = binder.getService();
             mBound = true;
 
-            //set onProgressListener
-            mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
-
-            bitcoinjService.setOnProgressListener(new OnProgressListener() {
-                @Override
-                public void onProgress(int progress) {
-                    mProgressBar.setProgress(progress);
-                }
-            });
         }
 
         @Override
