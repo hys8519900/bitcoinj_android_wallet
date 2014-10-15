@@ -3,6 +3,8 @@ package test.example.wg.testbitcoinj;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Bundle;
+import android.os.Message;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
@@ -17,7 +19,6 @@ import org.bitcoinj.core.Block;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.DownloadListener;
 import org.bitcoinj.core.GetDataMessage;
-import org.bitcoinj.core.Message;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.PeerEventListener;
@@ -137,6 +138,14 @@ public class BitcoinjService extends Service {
                 log.info(kit.wallet().toString());
                 //Log.i("Wallet: ", " Waiting for coins to arrive. Press Ctrl-C to quit.");
 
+                //send Message to fresh UI
+                Message message = new Message();
+                message.what = 1;
+                //set Message data
+                Bundle bundle = new Bundle();
+                bundle.putString("address", kit.wallet().toString());
+                message.setData(bundle);
+                MainActivity.handler.sendMessage(message);
 
                 try{
                     Thread.sleep(Long.MAX_VALUE);

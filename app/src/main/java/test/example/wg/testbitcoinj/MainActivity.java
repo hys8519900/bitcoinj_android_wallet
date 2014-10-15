@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 
+
 public class MainActivity extends Activity {
     //private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
+    public static Handler handler;
 
     //Service for Binder
     BitcoinjService bitcoinjService;
@@ -49,7 +53,27 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, BitcoinjService.class);
         bindService(intent, mConnection, BIND_AUTO_CREATE);
 
+        //Msg handler
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        String str = msg.getData().getString("address");
+                        if(str == null)
+                        {
+                            Log.v("msg data", "empty");
+                        }
+                        else
+                        {
+                            Log.v("msg data", str);
+                        }
 
+                        changeAddressTextView(msg.getData().getString("address"));
+                        break;
+                }
+            }
+        };
     }
 
 
@@ -94,5 +118,10 @@ public class MainActivity extends Activity {
     public void changeAddressTextView() {
         TextView textView = (TextView)findViewById(R.id.text_address);
         textView.setText(BitcoinjService.getCurrentRecvAddress());
+    }
+
+    public void changeAddressTextView(String address) {
+        TextView textView = (TextView)findViewById(R.id.text_address);
+        textView.setText(address);
     }
 }
