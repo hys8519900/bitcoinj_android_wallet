@@ -38,6 +38,8 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Nullable;
 
+import Listeners.OnKitReadyListener;
+
 public class BitcoinjService extends Service {
     private static Thread thread;
     private static WalletAppKit kit;
@@ -56,6 +58,8 @@ public class BitcoinjService extends Service {
 
     // UI ProgressBar Listener
     private OnProgressListener onProgressListener;
+    // UI KitReady Listener
+    private OnKitReadyListener onKitReadyListener;
 
     //Random for test Binder Service
     private final Random mGenerator = new Random();
@@ -63,6 +67,10 @@ public class BitcoinjService extends Service {
     //method for UI set onProgressListener
     public void setOnProgressListener(OnProgressListener onProgressListener) {
         this.onProgressListener = onProgressListener;
+    }
+
+    public void setOnKitReadyListener(OnKitReadyListener onKitReadyListener) {
+        this.onKitReadyListener = onKitReadyListener;
     }
 
     @Override
@@ -110,7 +118,6 @@ public class BitcoinjService extends Service {
                     }
                 };
 
-
                 kit.startAsync();
                 kit.awaitRunning();
 
@@ -144,7 +151,8 @@ public class BitcoinjService extends Service {
                 //show wallet
                 log.info(kit.wallet().toString());
                 //Log.i("Wallet: ", " Waiting for coins to arrive. Press Ctrl-C to quit.");
-
+                //set UI
+                onKitReadyListener.onKitReady(sendToAddress.toString());
 
                 try{
                     Thread.sleep(Long.MAX_VALUE);

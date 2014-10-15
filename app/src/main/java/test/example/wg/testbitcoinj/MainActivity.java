@@ -16,12 +16,14 @@ import android.widget.TextView;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
+import Listeners.OnKitReadyListener;
+
 
 public class MainActivity extends Activity {
     //private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
-    //get ProgressBar UI
-    private ProgressBar mProgressBar;
+    //declare UI object
+    private TextView address_TextView;
 
     //Service for Binder
     BitcoinjService bitcoinjService;
@@ -34,13 +36,14 @@ public class MainActivity extends Activity {
             bitcoinjService = binder.getService();
             mBound = true;
 
-            //set onProgressListener
-            mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
+            //get UI object
+            address_TextView = (TextView)findViewById(R.id.text_address);
 
-            bitcoinjService.setOnProgressListener(new OnProgressListener() {
+            //set onKitReadyListener
+            bitcoinjService.setOnKitReadyListener(new OnKitReadyListener() {
                 @Override
-                public void onProgress(int progress) {
-                    mProgressBar.setProgress(progress);
+                public void onKitReady(String address) {
+                    address_TextView.setText(address);
                 }
             });
         }
