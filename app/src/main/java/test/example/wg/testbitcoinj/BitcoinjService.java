@@ -71,6 +71,11 @@ public class BitcoinjService extends Service {
         Log.v("Service", "onDestroy()");
         kit.stopAsync();
         kit.awaitTerminated();
+
+        if(!kit.isRunning())
+        {
+            log.info("kit is not Running");
+        }
     }
 
     @Override
