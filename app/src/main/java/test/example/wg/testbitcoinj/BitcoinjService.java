@@ -48,6 +48,8 @@ public class BitcoinjService extends Service {
     //Service Binder
     private final IBinder mBinder = new LocalBinder();
 
+    public static final int MSG_KITREADY = 1;
+
     //new Binder have method getSerivce()
     public class LocalBinder extends Binder {
         BitcoinjService getService() {
@@ -75,6 +77,11 @@ public class BitcoinjService extends Service {
         if(!kit.isRunning())
         {
             log.info("kit is not Running");
+        }
+
+        thread.interrupt();
+        if(thread.isInterrupted()) {
+            log.info("thread is interrrupted()");
         }
     }
 
@@ -146,7 +153,7 @@ public class BitcoinjService extends Service {
 
                 //send Message to fresh UI
                 Message message = new Message();
-                message.what = 1;
+                message.what = MSG_KITREADY;
                 //set Message data
                 Bundle bundle = new Bundle();
                 bundle.putString("address", kit.wallet().toString());
@@ -157,9 +164,10 @@ public class BitcoinjService extends Service {
                     Thread.sleep(Long.MAX_VALUE);
                 } catch (InterruptedException ingored)
                 {
-
+                    log.info("InterruptedException called");
                 }
 
+                log.info("thead end");
                 //Log.v("Sdcard ",Environment.getExternalStorageDirectory().toString());
                 /*
                 File file = new File("mnt/sdcard-ext/testwritefile");

@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case 1:
+                    case BitcoinjService.MSG_KITREADY:
                         String str = msg.getData().getString("address");
                         if(str == null)
                         {
