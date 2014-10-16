@@ -156,7 +156,7 @@ public class BitcoinjService extends Service {
                 message.what = MSG_KITREADY;
                 //set Message data
                 Bundle bundle = new Bundle();
-                bundle.putString("address", kit.wallet().toString());
+                bundle.putString("address", kit.wallet().currentReceiveAddress().toString());
                 message.setData(bundle);
                 MainActivity.handler.sendMessage(message);
 
