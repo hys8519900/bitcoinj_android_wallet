@@ -102,6 +102,9 @@ public class MainActivity extends Activity {
     }
 
     public void stop_service(View view) {
+        //unbind service
+        unbindService(mConnection);
+
         Intent stopIntent = new Intent(this, BitcoinjService.class);
         stopService(stopIntent);
     }

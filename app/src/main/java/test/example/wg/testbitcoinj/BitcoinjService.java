@@ -68,8 +68,9 @@ public class BitcoinjService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.v("service", "onDestroy()");
-        kit.setAutoStop(true);
+        Log.v("Service", "onDestroy()");
+        kit.stopAsync();
+        kit.awaitTerminated();
     }
 
     @Override
