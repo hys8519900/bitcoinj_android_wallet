@@ -70,6 +70,8 @@ public class MainActivity extends Activity {
                         }
 
                         changeAddressTextView(msg.getData().getString("address"));
+
+                        ((TextView)findViewById(R.id.text_balance)).setText(BitcoinjService.getBalance());
                         break;
                 }
             }

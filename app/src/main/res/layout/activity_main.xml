@@ -34,9 +34,32 @@
         android:onClick="testbutton"/>
 
     <TextView
+        android:id="@+id/text_labeladdress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_fortest"
+        android:text="Address: "
+        />
+
+    <TextView
         android:id="@+id/text_address"
         android:layout_below="@id/button_fortest"
+        android:layout_toRightOf="@id/text_labeladdress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/text_labelbalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_address"
+        android:text="Balance: "/>
+
+    <TextView
+        android:id="@+id/text_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_address"
+        android:layout_toRightOf="@id/text_labelbalance"/>
 
 </RelativeLayout>

@@ -209,4 +209,25 @@ public class BitcoinjService extends Service {
 
         return null;
     }
+
+    //static UI get Balance
+    public static String getBalance() {
+        if(kit != null && kit.isRunning())
+        {
+            return kit.wallet().getBalance().toFriendlyString();
+        }
+
+        return null;
+    }
+
+
+    //static UI get pending Balance
+    public static String getPending() {
+        if(kit != null && kit.isRunning())
+        {
+            return kit.wallet().getBalance().toFriendlyString();
+        }
+
+        return null;
+    }
 }
