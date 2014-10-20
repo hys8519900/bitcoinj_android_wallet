@@ -73,6 +73,10 @@ public class MainActivity extends Activity {
 
                         ((TextView)findViewById(R.id.text_balance)).setText(BitcoinjService.getBalance());
                         break;
+
+                    case BitcoinjService.MSG_FRESHUI:
+                        changeAddressTextView();
+                        ((TextView)findViewById(R.id.text_balance)).setText(BitcoinjService.getBalance());
                 }
             }
         };

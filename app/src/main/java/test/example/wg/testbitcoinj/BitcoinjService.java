@@ -49,6 +49,7 @@ public class BitcoinjService extends Service {
     private final IBinder mBinder = new LocalBinder();
 
     public static final int MSG_KITREADY = 1;
+    public static final int MSG_FRESHUI = 2;
 
     //new Binder have method getSerivce()
     public class LocalBinder extends Binder {
@@ -134,6 +135,9 @@ public class BitcoinjService extends Service {
                             @Override
                             public void onSuccess(@Nullable Transaction result) {
                                 Log.i("Futures Confidence depth onSuccess: ", "depth 1" + result.toString());
+
+                                //send message to Fresh UI
+                                FreshUImessage();
                             }
 
                             @Override
@@ -229,5 +233,13 @@ public class BitcoinjService extends Service {
         }
 
         return null;
+    }
+
+    public void FreshUImessage() {
+        if(kit != null && kit.isRunning()) {
+            Message message = new Message();
+            message.what = MSG_FRESHUI;
+            MainActivity.handler.sendMessage(message);
+        }
     }
 }
