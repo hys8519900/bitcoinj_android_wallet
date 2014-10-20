@@ -79,22 +79,29 @@
         android:layout_toRightOf="@id/editText"
         android:text=" BTC"/>
 
+    <Button
+        android:id="@+id/button_sendcoin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText"
+        android:layout_alignParentRight="true"
+        android:text="Send"
+        android:onClick="sendcoins"/>
+
     <EditText
         android:id="@+id/editaddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editText"
+        android:layout_alignBaseline="@id/button_sendcoin"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/button_sendcoin"
         android:hint="Enter Address"
         android:digits="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-        android:lines="1"/>
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        />
 
-    <Button
-        android:id="@+id/button_sendcoin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/editaddress"
-        android:layout_alignParentRight="true"
-        android:text="Send"
-        android:onClick="sendcoins"/>
+
 
 </RelativeLayout>

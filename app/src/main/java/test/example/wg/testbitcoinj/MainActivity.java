@@ -119,11 +119,8 @@ public class MainActivity extends Activity {
 
     public void testbutton(View view) {
         //test service binded
-        TextView textView = (TextView)findViewById(R.id.text_address);
-        textView.setText("" + bitcoinjService.getRandomNumber());
+        ((EditText)findViewById(R.id.editaddress)).setText("mrJMXE3p8yu4RZKqihCsBy9dWoaLGyYnUj");
 
-
-        //changeAddressTextView();
     }
 
     public void sendcoins(View view) {
