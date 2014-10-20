@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -102,6 +103,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Button method
     public void start_service(View view) {
         Intent startIntent = new Intent(this, BitcoinjService.class);
         startService(startIntent);
@@ -122,6 +124,10 @@ public class MainActivity extends Activity {
 
 
         //changeAddressTextView();
+    }
+
+    public void sendcoins(View view) {
+        BitcoinjService.simpleSendToAddress(((EditText)findViewById(R.id.editText)).getText().toString(), ((EditText)findViewById(R.id.editaddress)).getText().toString());
     }
 
     public void changeAddressTextView() {
