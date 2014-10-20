@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -133,6 +134,30 @@ public class BitcoinjService extends Service {
 
                         Coin value = tx.getValueSentToMe(wallet);
                         Log.i("AbstractWalletEventListener: ","Received tx for " + value.toFriendlyString() + ": " + tx);
+                        Log.i("AbstractWalletEventListener: ","Transaction will be forwarded after it confirms.");
+
+                        Futures.addCallback(tx.getConfidence().getDepthFuture(1), new FutureCallback<Transaction>() {
+                            @Override
+                            public void onSuccess(@Nullable Transaction result) {
+                                Log.i("Futures Confidence depth onSuccess: ", "depth 1" + result.toString());
+
+                                //send message to Fresh UI
+                                FreshUImessage();
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                throw new RuntimeException(t);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCoinsSent(Wallet wallet, Transaction tx, Coin prevBalance, Coin newBalance) {
+                        super.onCoinsSent(wallet, tx, prevBalance, newBalance);
+
+                        Coin valuesent = tx.getValueSentFromMe(wallet);
+                        Log.i("AbstractWalletEventListener: ","Sent tx for " + valuesent.toFriendlyString() + ": " + tx);
                         Log.i("AbstractWalletEventListener: ","Transaction will be forwarded after it confirms.");
 
                         Futures.addCallback(tx.getConfidence().getDepthFuture(1), new FutureCallback<Transaction>() {
