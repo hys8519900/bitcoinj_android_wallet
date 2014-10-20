@@ -15,10 +15,12 @@ import com.google.common.util.concurrent.Futures;
 
 import org.bitcoinj.core.AbstractWalletEventListener;
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.Block;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.DownloadListener;
 import org.bitcoinj.core.GetDataMessage;
+import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.PeerEventListener;
@@ -61,6 +63,8 @@ public class BitcoinjService extends Service {
     //Random for test Binder Service
     private final Random mGenerator = new Random();
 
+    private static NetworkParameters params;
+
 
     @Override
     public  void onCreate() {
@@ -93,7 +97,7 @@ public class BitcoinjService extends Service {
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                NetworkParameters params = TestNet3Params.get();
+                params = TestNet3Params.get();
                 kit = new WalletAppKit(params, new File("/mnt/sdcard-ext/"), "walletappkit-example")
                 {
                     @Override
@@ -241,5 +245,22 @@ public class BitcoinjService extends Service {
             message.what = MSG_FRESHUI;
             MainActivity.handler.sendMessage(message);
         }
+    }
+
+    //simple send coins without check broadcast success
+    public static void simpleSendToAddress(String coins, String address)
+    {
+        Address sendaddress = null;
+        try {
+            sendaddress = new Address(params, address);
+        } catch (AddressFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            final Wallet.SendResult sendResult =  kit.wallet().sendCoins(kit.peerGroup(), sendaddress, Coin.parseCoin(coins));
+        } catch (InsufficientMoneyException e) {
+            e.printStackTrace();
+        }
+
     }
 }
