@@ -99,7 +99,7 @@ public class BitcoinjService extends Service {
             @Override
             public void run() {
                 params = TestNet3Params.get();
-                kit = new WalletAppKit(params, new File("/data"), "walletappkit-example")
+                kit = new WalletAppKit(params, new File("/sdcard"), "walletappkit-example")
                 {
                     @Override
                     protected void onSetupCompleted()
