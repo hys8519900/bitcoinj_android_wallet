@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 20
+    compileSdkVersion 19
     buildToolsVersion "20.0.0"
 
     defaultConfig {
@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile group: 'org.bitcoinj', name:'bitcoinj-core', version:'0.12'
-    compile group: 'org.slf4j', name:'slf4j-android', version:'1.7.6'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'org.bitcoinj:bitcoinj-core:0.12'
+    compile 'org.slf4j:slf4j-android:1.7.6'
 }
